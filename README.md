@@ -6,7 +6,7 @@ Component initializer finds all DOM elements with a data-component attribute. It
 
 ## Installation
 
-    npm install component-make
+    npm install component-initializer
 
 ## Usage
 
