@@ -18,6 +18,7 @@
     "gulp-jshint": "^1.8.4",
     "gulp-jsvalidate": "^1.0.0",
     "gulp-mocha": "^1.0.0",
+    "jquery": "^2.1.1",
     "jsdom": "^1.0.0-pre.6",
     "jshint-stylish": "^0.4.0",
     "map-stream": "^0.1.0",
@@ -26,8 +27,9 @@
     "sinon": "^1.10.3"
   },
   "dependencies": {
+    "component-maker": "git+https://github.com/cwebbdesign/component-maker",
     "lodash": "^2.4.1",
-    "component-maker": "git+https://github.com/cwebbdesign/component-maker"
+    "store-object": "0.0.1"
   },
   "license": "MIT",
   "repository": {

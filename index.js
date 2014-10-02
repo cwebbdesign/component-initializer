@@ -17,7 +17,8 @@ module.exports = function(opts) {
   var $ = opts.$ || require('jquery');
   var ns = opts.namespace || 'component';
   var Store = require('store-object');
-  var initializeComponent = require('./lib/init');
+  var initializeComponent = require('./lib/init').initialize;
+  //var getInitialized = require('./lib/init').getInitialized;
   var domUtils = require('./lib/dom')({
     $: $,
     namespace: ns
@@ -34,6 +35,7 @@ module.exports = function(opts) {
   var componentSource;
   var asyncComponentSource;
   var loadedAsyncComponents = {};
+
 
   // temporary until logger is updated
   if (console && console.log && !console.warn) {
@@ -109,6 +111,7 @@ module.exports = function(opts) {
   }
 
   return {
-    initialize: initialize
+    initialize: initialize,
+    //getInitialized: getInitialized
   };
 };
