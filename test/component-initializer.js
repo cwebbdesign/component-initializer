@@ -25,7 +25,10 @@ var fixture = '<div id="test"> <div data-component="test" data-component-color="
 var initializer = require('../index');
 var initializeComponent = require('../lib/init').initialize;
 
-var domUtils = require('../lib/dom')({$: $, namespace: 'component'});
+var domUtils = require('../lib/dom')({
+  $: $,
+  namespace: 'component'
+});
 var DOM = domUtils.returnElementArray;
 var generateConfig = domUtils.generateConfig;
 
@@ -42,9 +45,9 @@ describe('Initializer', function() {
 
     window.$('body').append(fixture);
     component = {
-        name: 'test',
-        $el: window.$('#test'),
-        initialize: sinon.spy()
+      name: 'test',
+      $el: window.$('#test'),
+      initialize: sinon.spy()
     };
 
   });
@@ -98,7 +101,9 @@ describe('Initializer', function() {
         $el: window.$('#test'),
         initialize: sinon.spy()
       };
-      var config = {color: 'blue'}
+      var config = {
+        color: 'blue'
+      }
 
       initializeComponent(comp, config);
 
