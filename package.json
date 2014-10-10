@@ -29,7 +29,7 @@
     "component-maker": "^0.0.2",
     "lodash": "^2.4.1",
     "jquery": "^2.1.1",
-    "store-object": "^0.0.1"
+    "store-object": "^0.0.2"
   },
   "license": "MIT",
   "repository": {
