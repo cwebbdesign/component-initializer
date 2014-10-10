@@ -28,7 +28,7 @@ module.exports = function(opts) {
   var logger = opts.logger || {
       log: function() {}
     };
-
+  var asyncPath = opts.asyncBundlePath || '/dist/js/bundle.'
 
   // Begin Module
   // ----------------------------------
@@ -93,7 +93,7 @@ module.exports = function(opts) {
 
       // Create and store a reference to the script loading request
       promise = $.ajax({
-        url: '/js/dist/bundle.' + name + '.js'
+        url: asyncPath + name + '.js'
         //, cache: false
       });
     }
