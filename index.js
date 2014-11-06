@@ -28,7 +28,7 @@ module.exports = function(opts) {
   var logger = opts.logger || {
       log: function() {}
     };
-  var asyncPath = opts.asyncBundlePath || '/dist/js/bundle.'
+  var asyncPath = opts.asyncBundlePath || '/dist/js/bundle.';
 
   // Begin Module
   // ----------------------------------
@@ -47,8 +47,8 @@ module.exports = function(opts) {
     .populate(opts.componentSource.components);
 
   // Create a data source for all components loaded only when necessary
-  asyncComponentSource = new Store('asyncComponents')
-    .populate(opts.componentSource.asyncComponents);
+  asyncComponentSource = new Store('asyncComponents');
+  //.populate(opts.componentSource.asyncComponents);
 
   // Takes an optional jQuery cached DOM element
   function initialize($container) {
@@ -81,7 +81,7 @@ module.exports = function(opts) {
     logger.log('Should load async component: ', name);
     // Check if there is a promise stored for this script,
     // if so attach handlers for initialization
-    if (!asyncComponentSource['items'][name]) {
+    if (!opts.componentSource.asyncComponents[name]) {
       console.warn('Async component ', name, ' definition not found.');
       return;
     }
@@ -103,6 +103,9 @@ module.exports = function(opts) {
     loadedAsyncComponents[name]
       .done(function() {
         logger.log('Success: Component loaded: ', name);
+        // Async requires are passed in a function to prevent an attempt to find the module
+        // before it's there.
+        asyncComponentSource.add(opts.componentSource.asyncComponents[name]());
         initializeComponent(asyncComponentSource.get(name), config);
       })
       .fail(function() {
