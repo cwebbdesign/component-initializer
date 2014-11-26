@@ -103,9 +103,11 @@ module.exports = function(opts) {
     loadedAsyncComponents[name]
       .done(function() {
         logger.log('Success: Component loaded: ', name);
-        // Async requires are passed in a function to prevent an attempt to find the module
-        // before it's there.
-        asyncComponentSource.add(opts.componentSource.asyncComponents[name]());
+        // Async requires are passed in a function to prevent
+        // attempts to require the module before it's there
+        var component = opts.componentSource.asyncComponents[name]();
+
+        asyncComponentSource.add(component);
         initializeComponent(asyncComponentSource.get(name), config);
       })
       .fail(function() {
