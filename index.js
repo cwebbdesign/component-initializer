@@ -16,19 +16,22 @@ module.exports = function(opts) {
   var _ = require('lodash');
   var $ = opts.$ || require('jquery');
   var ns = opts.namespace || 'component';
+  var baseUrl = (opts.baseUrl || '').toString();
+
   var Store = require('store-object');
   var initializeComponent = require('./lib/init').initialize;
   //var getInitialized = require('./lib/init').getInitialized;
   var domUtils = require('./lib/dom')({
     $: $,
-    namespace: ns
+    namespace: ns,
+    baseUrl: baseUrl
   });
   var DOM = domUtils.returnElementArray;
   var generateConfig = domUtils.generateConfig;
   var logger = opts.logger || {
-      log: function() {}
+      log: function () {}
     };
-  var asyncPath = opts.asyncBundlePath || '/dist/js/bundle.';
+  var asyncPath = baseUrl + (opts.asyncBundlePath || '/dist/js/bundle.').toString();
 
   // Begin Module
   // ----------------------------------
@@ -48,7 +51,6 @@ module.exports = function(opts) {
 
   // Create a data source for all components loaded only when necessary
   asyncComponentSource = new Store('asyncComponents');
-  //.populate(opts.componentSource.asyncComponents);
 
   // Takes an optional jQuery cached DOM element
   function initialize($container) {
