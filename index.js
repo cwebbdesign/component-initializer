@@ -17,10 +17,10 @@ module.exports = function(opts) {
   var $ = opts.$ || require('jquery');
   var ns = opts.namespace || 'component';
   var baseUrl = (opts.baseUrl || '').toString();
-
+  var urlResolver = require ('url-version-resolver'); // allow for the option of async bundles with version numbers
   var Store = require('store-object');
   var initializeComponent = require('./lib/init').initialize;
-  //var getInitialized = require('./lib/init').getInitialized;
+
   var domUtils = require('./lib/dom')({
     $: $,
     namespace: ns,
@@ -29,9 +29,10 @@ module.exports = function(opts) {
   var DOM = domUtils.returnElementArray;
   var generateConfig = domUtils.generateConfig;
   var logger = opts.logger || {
-      log: function () {}
+      log: function() {}
     };
   var asyncPath = baseUrl + (opts.asyncBundlePath || '/dist/js/bundle.').toString();
+  var resolveAsyncUrl = urlResolver(opts.versionMap).resolveUrl; // urlResolver can handle it if there's no mapping
 
   // Begin Module
   // ----------------------------------
@@ -80,6 +81,7 @@ module.exports = function(opts) {
 
   function loadComponent(name, config) {
     var promise = null;
+
     logger.log('Should load async component: ', name);
     // Check if there is a promise stored for this script,
     // if so attach handlers for initialization
@@ -92,10 +94,10 @@ module.exports = function(opts) {
       promise = loadedAsyncComponents[name];
 
     } else {
-
       // Create and store a reference to the script loading request
+
       promise = $.ajax({
-        url: asyncPath + name + '.js'
+        url: resolveAsyncUrl('.' + asyncPath + name + '.js').replace(/^\./, '')
         //, cache: false
       });
     }
